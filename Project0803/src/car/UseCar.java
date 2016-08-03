@@ -9,5 +9,6 @@ class UseCar{
 
 		Car c2=b;
 		c2.go();//¹ö½º
+
 	}
 }
