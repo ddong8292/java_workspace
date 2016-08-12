@@ -28,9 +28,10 @@ public class SetTest {
 		
 		//모든 객체의 배경색을 바꾸시오!
 		Iterator it=set.iterator();
-		
+
 		while(it.hasNext()){
 			JButton bt=(JButton)it.next();
+		
 			System.out.println(bt.getText());
 		}
 	}

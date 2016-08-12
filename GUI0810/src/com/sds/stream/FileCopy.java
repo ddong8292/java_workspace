@@ -60,7 +60,7 @@ class FileCopy{
 				try{
 					fis.close(); //½ºÆ®¸² ´Ý±â
 				}catch(IOException e){
-				}
+					}
 			}
 
 		}

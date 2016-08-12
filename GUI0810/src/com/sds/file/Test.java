@@ -17,6 +17,7 @@ import javax.swing.JButton;
 import javax.swing.JFileChooser;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 
@@ -90,7 +91,7 @@ public class Test extends JFrame implements ActionListener{
 	public void Save(){
 		int result=chooser2.showOpenDialog(this);
 		if(result==JFileChooser.APPROVE_OPTION){
-			String path=chooser2.getSelectedFile().getParent();
+			String path=chooser2.getSelectedFile().getAbsolutePath();
 			System.out.println(path);
 			txt2.setText(path);
 			repaint();
@@ -100,11 +101,28 @@ public class Test extends JFrame implements ActionListener{
 		try{
 			fis = new FileInputStream(txt.getText());
 			fos = new FileOutputStream(txt2.getText());
-			
+			int data;
+			while((data=fis.read())!=-1){
+				fos.write(data);				
+			}
 		}catch(FileNotFoundException e){
+			e.getStackTrace();
+		}catch(IOException e){
 			
 		}finally{
-			
+			if(fos!=null){
+				try{
+					fos.close(); //스트림 닫기
+				}catch(IOException e){
+				}
+			}
+			if(fis!=null){
+				try{
+					fis.close(); //스트림 닫기
+				}catch(IOException e){
+					}
+			}
+			JOptionPane.showMessageDialog(this, "완료 되었습니다.");
 		}
 	
 	}
