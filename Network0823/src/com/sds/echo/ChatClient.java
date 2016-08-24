@@ -107,6 +107,7 @@ public class ChatClient extends JFrame implements ActionListener{
 	
 	public void actionPerformed(ActionEvent e) {
 		connect();
+		
 	}
 	public static void main(String[] args) {
 		new ChatClient();
