@@ -26,6 +26,7 @@ class FileCopy{
 		//예외처리의 목적? 비정상종료의 방지
 
 		try{
+
 			fis = new FileInputStream(name);
 			fos= new FileOutputStream(dest);
 			int data; //읽어들인 알갱이 1알을 받기 위한 변수
