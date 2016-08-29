@@ -1,24 +1,48 @@
 package design;
 
+import java.awt.Color;
 import java.util.ArrayList;
+
+import javax.swing.JFrame;
+import javax.swing.JPanel;
 
 import javafx.scene.canvas.Canvas;
 import javafx.scene.control.Menu;
 import javafx.scene.control.MenuBar;
 import javafx.scene.image.Image;
 
-public class Capture {
+public class Capture extends JFrame{
 	MenuBar menubar;  //메뉴바
-	Menu menuFile ;		//파일저장시키는 메뉴
+	Menu menuSave ;		//파일저장시키는 메뉴
 	Menu menuPen;		//펜을 사용할 수 있는 메뉴
 	Menu menuEraser;		//지우개를 사용할 수 있는 메뉴
 	Menu menuTxt;		//글자를 삽입 할 수 있는 메뉴
 	Menu menuColor;		//색상을 변경시킬 수 있는 메뉴
-	Menu menuload;		//저장된 이미지파일을 불러오는 메뉴
+	Menu menuLoad;		//저장된 이미지파일을 불러오는 메뉴
 	Canvas canvas;		//가운데 편집기능이 되는 캔버스(캡처된 이미지)
 	ArrayList<Image> arraylist;		//저장된 이미지들의 배열(오른쪽에 보여준다)
-	
+	JPanel p_north, p_center;
 	public void capture(){
+		menubar=new MenuBar();
+		//menuFile=new Menu("Save");
+		menuPen=new Menu("Pen");
+		menuEraser=new Menu("Eraser");
+		menuTxt=new Menu("Text");
+		menuColor=new Menu("Color");
+	//	menuload=new Menu("Load");
+		canvas=new Canvas();
+		
+		//menubar=new MenuBar(menuFile, menuPen, menuEraser,menuTxt,menuColor,menuload);
+		
+		p_center=new JPanel();
+		
+		add(p_center);
+		
+		setSize(1000,1000);
+		setBackground(Color.YELLOW);
+		setDefaultCloseOperation(EXIT_ON_CLOSE);
+		setVisible(true);
+		
 		//1.Robot메서드를 이용하여 화면캡쳐
 			//1-1.Robot (GraphicsDevice  screen)
 			//1-2. BufferedImage	createScreenCapture (Rectangle  screenRect) 
@@ -54,5 +78,7 @@ public class Capture {
 		//2.default 경로의 이미지를 불러온다.
 		
 	}
-	
+	public static void main(String[] args) {
+		new Capture();
+	}
 }

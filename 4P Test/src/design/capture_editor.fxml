@@ -1,0 +1,100 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.canvas.*?>
+<?import javafx.scene.control.*?>
+<?import java.lang.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.image.Image?>
+
+<fx:root type="javafx.scene.layout.BorderPane" xmlns:fx="http://javafx.com/fxml"
+	maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity"
+	minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0">
+
+	<top>
+		<ToolBar BorderPane.alignment="CENTER">
+			<items>
+				<Button fx:id="btnSave">
+					<graphic>
+						<ImageView fitHeight="25.0" fitWidth="25.0">
+							<image>
+								<Image url="@icons1/savefile.png" />
+							</image>
+						</ImageView>
+					</graphic>
+				</Button>
+				<Button>
+					<graphic>
+						<ImageView fitHeight="25.0" fitWidth="25.0">
+							<image>
+								<Image url="@icons1/pen.png" />
+							</image>
+						</ImageView>
+					</graphic>
+				</Button>
+				<Button>
+					<graphic>
+						<ImageView fitHeight="25.0" fitWidth="25.0">
+							<image>
+								<Image url="@icons1/eraser.png" />
+							</image>
+						</ImageView>
+					</graphic>
+				</Button>
+				<Button>
+					<graphic>
+						<ImageView fitHeight="25.0" fitWidth="25.0">
+							<image>
+								<Image url="@icons1/text.png" />
+							</image>
+						</ImageView>
+					</graphic>
+				</Button>
+				<Button>
+					<graphic>
+						<ImageView fitHeight="25.0" fitWidth="25.0">
+							<image>
+								<Image url="@icons1/color.png" />
+							</image>
+						</ImageView>
+					</graphic>
+				</Button>
+				<Button>
+					<graphic>
+						<ImageView fitHeight="25.0" fitWidth="25.0">
+							<image>
+								<Image url="@icons1/loadfile.png" />
+							</image>
+						</ImageView>
+					</graphic>
+				</Button>
+				<Button fx:id="btn_capture">
+					<graphic>
+						<ImageView fitHeight="25.0" fitWidth="25.0">
+							<image>
+								<Image url="@icons1/capture.png" />
+							</image>
+						</ImageView>
+					</graphic>
+				</Button>
+			</items>
+		</ToolBar>
+	</top>
+	<center>
+		<Canvas fx:id="canvas" BorderPane.alignment="CENTER"/>
+	</center>
+	<right>
+		<ScrollPane prefWidth="250.0" BorderPane.alignment="CENTER">
+			<content>
+				<VBox >
+					<children>
+
+					</children>
+				</VBox>
+			</content>
+
+		</ScrollPane>
+	</right>
+</fx:root>
