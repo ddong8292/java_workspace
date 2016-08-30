@@ -19,6 +19,8 @@ import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 
+import org.omg.CORBA.PRIVATE_MEMBER;
+
 import com.sds.movie.list.MovieList;
 import com.sds.movie.regist.MovieRegist;
 import com.sds.movie.reservation.Reservation;
@@ -40,11 +42,11 @@ public class AppMain extends JFrame implements ActionListener{
 	String url="jdbc:oracle:thin:@localhost:1521:XE";
 	String user="java0819";
 	String password="java0819";
-	Connection con;
+	private static Connection con;
 	
 	
 	public AppMain() {
-		
+		connectDB();
 		menu= new JButton[4];
 		content=new JPanel[menu.length];
 		
@@ -101,7 +103,7 @@ public class AppMain extends JFrame implements ActionListener{
 		setSize(600, 500);
 		setVisible(true);
 	
-		connectDB();
+		
 	}
 	//데이터베이스 접속 메서드!!
 	public void connectDB(){
@@ -143,6 +145,9 @@ public class AppMain extends JFrame implements ActionListener{
 				showContent(i);
 			}
 		}
+	}
+	public static Connection getConnection(){
+		return con;
 	}
 	public static void main(String[] args) {
 		new AppMain();

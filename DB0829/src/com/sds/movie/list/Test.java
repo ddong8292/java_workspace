@@ -46,12 +46,12 @@ public class Test {
 				XSSFRow row=moive.getRow(i);
 				
 				//하나의 레코드가 완료되는 시점!!
-				String sql="insert into movie(movie_id, title, genre_id, showtime, openday)";
-				sql=sql+"values(seq_movie.nextval,?,?,?,?)";
+				String sql="insert into movie(movie_id, title, genre_id, showtime, openday,img)";
+				sql=sql+"values(seq_movie.nextval,?,?,?,?,?)";
 				
 				try {
 					pstmt=con.prepareStatement(sql);
-					for(int a=0; a<4; a++){
+					for(int a=0; a<5; a++){
 						XSSFCell cell=row.getCell(a);
 						
 						if(cell.getCellType()==XSSFCell.CELL_TYPE_STRING){
