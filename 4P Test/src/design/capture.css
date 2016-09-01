@@ -1,0 +1,5 @@
+#btn_save{
+	-fx-background-image: url('//res/savefile.png');
+	-fx-background-size: cover;
+	-fx-background-repeat: no-repeat;
+}
