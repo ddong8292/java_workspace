@@ -3,3 +3,12 @@
 	-fx-background-size: cover;
 	-fx-background-repeat: no-repeat;
 }
+
+#input_text{
+	-fx-background-color: transparent;
+	-fx-font-size: 20pt;
+	-fx-font-weight: bold;
+	-fx-border-width: 2px;
+	-fx-border-color: #000000;
+	-fx-border-style: dotted;
+}

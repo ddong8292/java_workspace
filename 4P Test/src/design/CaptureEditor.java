@@ -10,27 +10,25 @@ import java.util.ArrayList;
 import java.util.ResourceBundle;
 
 import javafx.event.ActionEvent;
-import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
-import javafx.geometry.Insets;
 import javafx.scene.Cursor;
 import javafx.scene.ImageCursor;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.control.Button;
 import javafx.scene.control.ColorPicker;
+import javafx.scene.control.Label;
+import javafx.scene.control.TextArea;
+import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
+import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.BorderPane;
-import javafx.scene.layout.HBox;
-import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
-import javafx.scene.text.Font;
-import javafx.scene.text.Text;
 
 public class CaptureEditor extends BorderPane implements Initializable {
 	@FXML Button btn_capture;
@@ -39,6 +37,7 @@ public class CaptureEditor extends BorderPane implements Initializable {
 	@FXML Button btn_Pen;
 	@FXML Button btn_Eraser;
 	@FXML ColorPicker colorPicker;
+	@FXML Button btn_Text;
 	FileInputStream fis;
 	FileOutputStream fos;
 	GraphicsContext gc;
@@ -46,9 +45,12 @@ public class CaptureEditor extends BorderPane implements Initializable {
 	@FXML VBox vbox;
 	boolean isPen = false;
 	boolean iseraser=false;
+	boolean isInputText = false;
 	Image image_pen, image_eraser;
-	StackPane stackPane;
+	@FXML AnchorPane anchorPane;
 	Color color = Color.BLACK;
+	Label label;
+	TextField text;
 	
 	int x = 0;
 	int y = 0;
@@ -74,10 +76,9 @@ public class CaptureEditor extends BorderPane implements Initializable {
 		}
 		gc = canvas.getGraphicsContext2D();
 		right_img();
-		image_pen= new Image(getClass().getClassLoader().getResource("pen.png").toExternalForm());
-		image_eraser=new Image(getClass().getClassLoader().getResource("eraser.png").toExternalForm());
+		image_pen= new Image(getClass().getClassLoader().getResource("pen_use.png").toExternalForm());
+		image_eraser=new Image(getClass().getClassLoader().getResource("eraser_use.png").toExternalForm());
 	}
-	
 	public void initialize(URL location, ResourceBundle resources) {
 		btn_capture.setOnMouseClicked(event -> btn_capture(event));
 		btn_Save.setOnMouseClicked(event -> btn_Save(event));
@@ -86,11 +87,32 @@ public class CaptureEditor extends BorderPane implements Initializable {
 		canvas.setOnMousePressed(event->penMousePressed(event));
 		canvas.setOnMouseDragged(event->penMouseDragged(event));
 		canvas.setOnMouseReleased(event->penMouseReleased(event));
+		anchorPane.setOnMouseClicked(event->addTextArea(event));
 		btn_Eraser.setOnMouseClicked(event->eraser(event));
 		colorPicker.setOnAction(event->colorChange(event));
+		btn_Text.setOnMouseClicked(event->inputText(event));
+		
 	}
 
 
+
+	private void addTextArea(MouseEvent event) {
+		if(isInputText == true){
+			TextArea ta = new TextArea();
+			//tf.setPrefSize(100, 30);
+			ta.setPrefSize(100, 30);
+			ta.setLayoutX(event.getX());
+			ta.setLayoutY(event.getY());
+			ta.setId("input_text");
+			anchorPane.getChildren().add(ta);
+			ta.requestFocus();
+			
+		}
+	}
+
+	private void inputText(MouseEvent event) {
+		isInputText = !isInputText;
+	}
 
 	private void colorChange(ActionEvent event) {
 		color = colorPicker.getValue();
@@ -103,13 +125,13 @@ public class CaptureEditor extends BorderPane implements Initializable {
 			gc.setStroke(color);
 			gc.setLineWidth(3);
 			gc.beginPath();
-			gc.moveTo(x, y + 27.0);
+			gc.moveTo(x, y);
 		}
 		if(iseraser == true){	//지우개효과
 			gc.setStroke(Color.WHITE);
 			gc.setLineWidth(8);
 			gc.beginPath();
-			gc.moveTo(x, y+27.0);
+			gc.moveTo(x, y);
 		}
 	}
 
@@ -117,11 +139,11 @@ public class CaptureEditor extends BorderPane implements Initializable {
 		double x = event.getX();
 		double y = event.getY();
 		if(isPen == true){
-		    gc.lineTo(x, y+ 27.0);
+		    gc.lineTo(x, y);
 		    gc.stroke();
 		}
 		if(iseraser == true){
-			 gc.lineTo(x, y+27.0);
+			 gc.lineTo(x, y);
 			 gc.stroke();
 		}
 	}

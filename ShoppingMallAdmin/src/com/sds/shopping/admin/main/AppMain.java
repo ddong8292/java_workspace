@@ -10,7 +10,6 @@ import java.awt.event.WindowEvent;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
-import java.io.InputStream;
 import java.net.URL;
 import java.sql.Connection;
 import java.sql.DriverManager;
@@ -31,16 +30,17 @@ public class AppMain extends JFrame{
 	private static Connection con;
 	public static final int CONTENT_WIDTH=700;
 	public static final int CONTENT_HEIGHT=550;
-	String path;
+	
 	JPanel p_north;
 	JButton[] menu;
 	String[] menuTitle={
-			"상품관리","주문관리","회원관리","매출관리"
+			"Product관리","주문관리","회원관리","매출관리"
 			,"업체관리","관리자정보"
 	};
-	JPanel p_container;//모든 패널들을 위치시킬 중앙 패널!!
-	JPanel[] p_contents;//각 화면들을 가리킬 상위자료형!!
 	
+	JPanel p_container; //모든 패널들을 위치시킬 중앙 패널!!
+	JPanel[] p_contents;//각 화면들을 가리킬 상위자료형!!
+
 	public AppMain() {	
 		connect();
 		
@@ -68,18 +68,17 @@ public class AppMain extends JFrame{
 			}
 		});
 		
-		p_container=new JPanel();
-		p_container.setBackground(Color.YELLOW);
+		p_container = new JPanel();
 		
-		p_contents=new JPanel[menuTitle.length];
-		p_contents[0]=new ProductMain();
-		p_contents[1]=new OrderMain();
-		p_contents[2]=new MemberMain();
-		p_contents[3]=new SalesMain();
-		p_contents[4]=new PartnerMain();
-		p_contents[5]=new StaffMain();
+		p_contents = new JPanel[menuTitle.length];
+		p_contents[0] = new ProductMain();
+		p_contents[1] = new OrderMain();
+		p_contents[2] = new MemberMain();
+		p_contents[3] = new SalesMain();
+		p_contents[4] = new PartnerMain();
+		p_contents[5] = new StaffMain();
 		
-		for(int i=0; i<p_contents.length; i++){
+		for(int i=0;i<p_contents.length;i++){
 			p_container.add(p_contents[i]);
 		}
 		
@@ -98,33 +97,31 @@ public class AppMain extends JFrame{
 		FileInputStream fis=null;
 		
 		try {
-			fis=new FileInputStream(url.getPath());
-			//System.out.println("스트림 생성!!");
+			fis = new FileInputStream(url.getPath());
+			//System.out.println("스트림 생성");
 			
-			//key-value로 이루어진 데이터를 해석해주는 객체
+			//key-value 로 이루어진 데이터를 해석해주는 객체
 			Properties props=new Properties();
-			props.load(fis);//파일을 인식한 시점!!
+			props.load(fis); //파일을 인식한 시점!!
 			
-			String host=props.getProperty("url");
 			String driver=props.getProperty("driver");
+			String host=props.getProperty("url");
 			String user=props.getProperty("user");
 			String password=props.getProperty("password");
 			
-			//System.out.println(host);
-			
 			Class.forName(driver);
-			//데이터베이스 접속 처리~
-			con=DriverManager.getConnection(host,user,password);
+			//데이터베이스 접속 처리~~~~
+			con=DriverManager.getConnection(host, user, password);
 			if(con !=null){
 				setTitle("접속 성공!!");
 			}else{
-				setTitle("접속 실패!!");
+				setTitle("접속 실패!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
 			}
 		} catch (FileNotFoundException e) {
 			e.printStackTrace();
-		} catch (IOException e) {
+		}catch (IOException e) {
 			e.printStackTrace();
-		} catch (ClassNotFoundException e) {
+		}catch(ClassNotFoundException e){
 			e.printStackTrace();
 		} catch (SQLException e) {
 			e.printStackTrace();
@@ -133,7 +130,7 @@ public class AppMain extends JFrame{
 				try {
 					fis.close();
 				} catch (IOException e) {
-					e.printStackTrace();
+					e.printStackTrace();	
 				}
 			}
 		}
@@ -151,6 +148,9 @@ public class AppMain extends JFrame{
 	}
 
 }
+
+
+
 
 
 
