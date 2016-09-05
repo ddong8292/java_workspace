@@ -1,0 +1,16 @@
+#btn_load{
+	
+}
+#btn_exit{
+	-fx-padding: 0;
+	-fx-background-size: cover;
+	-fx-background-position: center;
+	-fx-background-repeat: no-repeat;
+	-fx-background-image: url('//res/icons/close.png');
+	-fx-background-color: #DC143C;
+}
+#tf_domain{
+	
+}
+#tf_domain:focus{	
+}

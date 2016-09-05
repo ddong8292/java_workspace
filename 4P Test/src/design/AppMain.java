@@ -1,5 +1,6 @@
 package design;
 
+import four.person.web.browser.capture.CaptureEditor;
 import javafx.application.Application;
 import javafx.scene.Cursor;
 import javafx.scene.Scene;
