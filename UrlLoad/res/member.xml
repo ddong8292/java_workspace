@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<members>
+	<member>
+		<name>박찬홍</name>
+		<age>29</age>
+		<gender>남자</gender>
+	</member>
+	
+	<member>
+		<name>이상신</name>
+		<age>28</age>
+		<gender>중성</gender>
+	</member>
+	
+	<member>
+		<name>박지호</name>
+		<age>30</age>
+		<gender>남자</gender>
+	</member>	
+</members>

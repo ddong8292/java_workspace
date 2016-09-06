@@ -9,9 +9,12 @@ import java.net.URL;
 import java.util.ArrayList;
 import java.util.ResourceBundle;
 
+import javax.imageio.ImageIO;
+
 import four.person.web.browser.main.AppMain;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
+import javafx.embed.swing.SwingFXUtils;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
@@ -19,6 +22,7 @@ import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Cursor;
 import javafx.scene.ImageCursor;
+import javafx.scene.SnapshotParameters;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.control.Button;
@@ -65,16 +69,10 @@ public class CaptureEditor extends BorderPane implements Initializable {
 	
 	int x = 0;
 	int y = 0;
-	String[] img={
-			"file:///C:/java_workspace/DB0829/res/1.jpg"
-			,"file:///C:/java_workspace/DB0829/res/7.jpg"
-			,"file:///C:/java_workspace/DB0829/res/3.jpg"
-			,"file:///C:/java_workspace/DB0829/res/4.jpg"
-			,"file:///C:/java_workspace/DB0829/res/5.jpg"
-			,"file:///C:/java_workspace/DB0829/res/6.jpg"
-	};
+
 	ArrayList<ImageView>list=new ArrayList<ImageView>();
 	ArrayList<TextArea>textdate=new ArrayList<TextArea>();
+	ArrayList<File>imgfile=new ArrayList<File>();
 	WritableImage image;
 	public CaptureEditor(WritableImage image) {//메인 메서드
 		this.image = image;
@@ -94,6 +92,7 @@ public class CaptureEditor extends BorderPane implements Initializable {
 		//addCaptureImage();
 	}
 	public void initialize(URL location, ResourceBundle resources) {
+		colorPicker.setValue(Color.BLACK);
 		btn_Save.setOnMouseClicked(event -> btn_Save(event));
 		btn_Load.setOnMouseClicked(event -> btn_Load(event));
 		btn_Pen.setOnMouseClicked(event->btn_pen(event));
@@ -104,7 +103,6 @@ public class CaptureEditor extends BorderPane implements Initializable {
 		btn_Eraser.setOnMouseClicked(event->eraser(event));
 		colorPicker.setOnAction(event->colorChange(event));
 		btn_Text.setOnMouseClicked(event->inputText(event));
-		colorPicker.setValue(Color.BLACK);
 		
 		stackPane.widthProperty().addListener(new ChangeListener<Number>() {
 			@Override
@@ -276,38 +274,19 @@ public class CaptureEditor extends BorderPane implements Initializable {
 
 
 	private void btn_Save(MouseEvent event) {
-		String path = "C:/Users/student/Downloads/game2.png";
-		File file = new File("C:/Users/student/Downloads/game.png");
-		//System.out.println(file.getName());
-		
+		saveFile();
+	}
+	public void saveFile(){
+		String path = "C:/4p/test.png";
+		SnapshotParameters parameters = new SnapshotParameters();
+		parameters.setFill(Color.TRANSPARENT);
+		WritableImage sanpshotImage = stackPane.snapshot(parameters, null);
+		File file = new File(path);
 		try {
-			fis=new FileInputStream(file);
-			fos=new FileOutputStream(path);
-			int data;
-			byte[] b = new byte[1024];
-			while((data=fis.read(b))!=-1){
-				//System.out.println(data);
-				fos.write(b);
-				fos.flush();
-			}
-		} catch (FileNotFoundException e) {
-			e.printStackTrace();
+			ImageIO.write(SwingFXUtils.fromFXImage(sanpshotImage, null), "png", file);
+		
 		} catch (IOException e) {
 			e.printStackTrace();
-		}finally{
-			if(fis !=null){
-				try {
-					fis.close();
-				} catch (IOException e) {
-					e.printStackTrace();
-				}
-			}if(fos !=null){
-				try {
-					fos.close();
-				} catch (IOException e) {
-					e.printStackTrace();
-				}
-			}
 		}
 	}
 	
@@ -317,8 +296,16 @@ public class CaptureEditor extends BorderPane implements Initializable {
 				
 	}
 	public void right_img(){
+		
+		//파일 객체를 폴더의 절대 경로를 매개변수 넣어서 생성
+		File folder=new File("C:/4p");
+		//파일 배열을 선언하고 위에 생성한 파일 객체의 listFiles 메서드 호출하여 초기화.
+		File[] listOfFiles=folder.listFiles();
+		//콘솔창에 파일 이름 출력.
+		//System.out.println(listOfFiles);
+		
 		//이미지 객체를 생성하고 생성한 객체의 주소 값을 ArrayList에 add
-		for(int i=0; i<img.length; i++){
+		for(int i=0; i<listOfFiles.length; i++){
 			Image image=new Image(img[i], 230.0, 450.0, true, true);
 			ImageView iv = new ImageView(image);
 			iv.setId(i+"");

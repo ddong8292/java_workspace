@@ -9,6 +9,7 @@
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.layout.StackPane?>
+<?import javafx.scene.control.TextField?>
 
 <fx:root fx:id="root" type="javafx.scene.layout.BorderPane" xmlns:fx="http://javafx.com/fxml">
 
@@ -16,53 +17,13 @@
 		<ToolBar BorderPane.alignment="CENTER">
 			<items>
 				<Button fx:id="btn_Save" id="btn_save" prefHeight="25.0" prefWidth="25.0"/>
-				<Button fx:id="btn_Pen">
-					<graphic>
-						<ImageView fitHeight="25.0" fitWidth="25.0">
-							<image>
-								<Image url="@icons1/pen.png" />
-							</image>
-						</ImageView>
-					</graphic>
-				</Button>
-				<Button fx:id="btn_Eraser">
-					<graphic>
-						<ImageView fitHeight="25.0" fitWidth="25.0">
-							<image>
-								<Image url="@icons1/eraser.png" />
-							</image>
-						</ImageView>
-					</graphic>
-				</Button>
-				<Button fx:id="btn_Text">
-					<graphic>
-						<ImageView fitHeight="25.0" fitWidth="25.0">
-							<image>
-								<Image url="@icons1/text.png" />
-							</image>
-						</ImageView>
-					</graphic>
-				</Button>
-				
-				<Button fx:id="btn_Load">
-					<graphic>
-						<ImageView fitHeight="25.0" fitWidth="25.0">
-							<image>
-								<Image url="@icons1/loadfile.png" />
-							</image>
-						</ImageView>
-					</graphic>
-				</Button>
-				<Button fx:id="btn_capture">
-					<graphic>
-						<ImageView fitHeight="25.0" fitWidth="25.0">
-							<image>
-								<Image url="@icons1/capture.png" />
-							</image>
-						</ImageView>
-					</graphic>
-				</Button>
-				<ColorPicker fx:id="colorPicker"/>
+				<Button fx:id="btn_Pen" id="btn_pen" prefHeight="25.0" prefWidth="25.0"/>
+				<Button fx:id="btn_Eraser" id="btn_eraser" prefHeight="25.0" prefWidth="25.0"/>				
+				<Button fx:id="btn_Text" id="btn_text" prefHeight="25.0" prefWidth="25.0"/>
+				<Button fx:id="btn_Load" id="btn_load" prefHeight="25.0" prefWidth="25.0"/>
+				<ColorPicker fx:id="colorPicker" prefHeight="25.0" prefWidth="44.0"/>	
+				<Pane HBox.hgrow="ALWAYS" />
+				<Button />
 			</items>
 		</ToolBar>
 	</top>
