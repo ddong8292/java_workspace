@@ -301,7 +301,7 @@ public class WidgetBarController{
 		}
 	}
 	private void showCaptureEditor() {
-		WritableImage image = AppMain.webView.snapshot(new SnapshotParameters(), null);	
+		WritableImage image = AppMain.center.snapshot(new SnapshotParameters(), null);	
 		if(captureEditor == null){
 			captureEditor = new CaptureEditor(image);
 		}

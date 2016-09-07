@@ -58,18 +58,19 @@ Button{
 	-fx-effect: innershadow( three-pass-box , rgba(0,0,0,0.4) , 10, 0.0 , 0 , 1 );
 }
 
-#btn_load{
-	-fx-background-image: url('//res/capture/load-1.png');
+#btn_close{
+	-fx-background-image: url('//res/capture/close.png');
 	-fx-background-size: cover;
 	-fx-background-repeat: no-repeat;
-	-fx-background-color:#85d8f7;
+	-fx-background-color:#DC143C;
 }
-#btn_load:hover{
-	-fx-effect: dropshadow( three-pass-box , #85d8f7 , 8, 0.0 , 0 , 1 );
+#btn_text:hover{
+	-fx-effect: dropshadow( three-pass-box , #DC143C, 8, 0.0 , 0 , 1 );
 }
-#btn_load:pressed{
+#btn_text:pressed{
 	-fx-effect: innershadow( three-pass-box , rgba(0,0,0,0.4) , 10, 0.0 , 0 , 1 );
 }
+
 
 
 #input_text{
@@ -81,6 +82,7 @@ Button{
 	-fx-border-style: dotted;
 	
 }
+
 #input_text:focus{
 	-fx-background-color: rgba(0, 0, 0, 0);
 
@@ -105,4 +107,25 @@ Button{
 
 #input_text .scroll-pane .content{
     -fx-background-color: transparent;
+}
+
+#alert{
+	-fx-font-family: 'Noto Sans CJK KR Medium';
+	-fx-background-radius: 6, 5;
+    -fx-background-insets: 0, 1; 
+    -fx-effect: innershadow( three-pass-box , #d0d0d0 , 10, 0.0 , 0 , 1 );
+    -fx-background-color: #e0e0e0;
+}
+#alert .container{
+	-fx-effect: dropshadow( three-pass-box , #d0d0d0 , 8, 0.0 , 0 , 1 );
+}
+#alert .button{
+	-fx-background-color: #d0d0d0;
+	-fx-font-family: 'Noto Sans CJK KR Medium';
+    -fx-font-size: 14px;
+}
+#alert .button:hover{
+	-fx-background-color: #808080;
+    -fx-font-size: 14px;
+    -fx-text-fill: white;
 }

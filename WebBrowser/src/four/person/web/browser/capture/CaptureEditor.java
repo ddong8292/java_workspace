@@ -2,11 +2,14 @@ package four.person.web.browser.capture;
 
 import java.io.File;
 import java.io.FileInputStream;
-import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.net.URL;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
+import java.util.Optional;
 import java.util.ResourceBundle;
 
 import javax.imageio.ImageIO;
@@ -26,7 +29,9 @@ import javafx.scene.SnapshotParameters;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.control.Button;
+import javafx.scene.control.ButtonType;
 import javafx.scene.control.ColorPicker;
+import javafx.scene.control.Dialog;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
@@ -41,15 +46,18 @@ import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
+import javafx.stage.Modality;
+import javafx.stage.StageStyle;
 
 public class CaptureEditor extends BorderPane implements Initializable {
 	@FXML Button btn_capture;
 	@FXML Button btn_Save;
-	@FXML Button btn_Load;
 	@FXML Button btn_Pen;
 	@FXML Button btn_Eraser;
 	@FXML ColorPicker colorPicker;
 	@FXML Button btn_Text;
+	@FXML Button btn_Close;
+	@FXML BorderPane root;
 	FileInputStream fis;
 	FileOutputStream fos;
 	GraphicsContext gc;
@@ -58,6 +66,7 @@ public class CaptureEditor extends BorderPane implements Initializable {
 	boolean isPen = false;
 	boolean iseraser=false;
 	boolean isInputText = false;
+	boolean isexit=false;
 	Image image_pen, image_eraser;
 	@FXML AnchorPane anchorPane;
 	@FXML StackPane stackPane;
@@ -74,6 +83,10 @@ public class CaptureEditor extends BorderPane implements Initializable {
 	ArrayList<TextArea>textdate=new ArrayList<TextArea>();
 	ArrayList<File>imgfile=new ArrayList<File>();
 	WritableImage image;
+	Image img;
+	File[] listOfFiles;
+	String rootPath = "file:///C:/4p/";
+	
 	public CaptureEditor(WritableImage image) {//메인 메서드
 		this.image = image;
 		FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("capture_editor.fxml"));
@@ -94,7 +107,6 @@ public class CaptureEditor extends BorderPane implements Initializable {
 	public void initialize(URL location, ResourceBundle resources) {
 		colorPicker.setValue(Color.BLACK);
 		btn_Save.setOnMouseClicked(event -> btn_Save(event));
-		btn_Load.setOnMouseClicked(event -> btn_Load(event));
 		btn_Pen.setOnMouseClicked(event->btn_pen(event));
 		canvas.setOnMousePressed(event->penMousePressed(event));
 		canvas.setOnMouseDragged(event->penMouseDragged(event));
@@ -103,6 +115,7 @@ public class CaptureEditor extends BorderPane implements Initializable {
 		btn_Eraser.setOnMouseClicked(event->eraser(event));
 		colorPicker.setOnAction(event->colorChange(event));
 		btn_Text.setOnMouseClicked(event->inputText(event));
+		btn_Close.setOnMouseClicked(event->exit(event));
 		
 		stackPane.widthProperty().addListener(new ChangeListener<Number>() {
 			@Override
@@ -119,7 +132,6 @@ public class CaptureEditor extends BorderPane implements Initializable {
 			}
 		});
 	}
-
 
 	private void addTextArea(MouseEvent event) {
 		if(isInputText == true){
@@ -277,7 +289,10 @@ public class CaptureEditor extends BorderPane implements Initializable {
 		saveFile();
 	}
 	public void saveFile(){
-		String path = "C:/4p/test.png";
+		DateFormat dateFormat = new SimpleDateFormat("yyMMddHHmmss");
+		Date date = new Date();
+		String filename = dateFormat.format(date);
+		String path = "C:/4p/"+filename+".png";
 		SnapshotParameters parameters = new SnapshotParameters();
 		parameters.setFill(Color.TRANSPARENT);
 		WritableImage sanpshotImage = stackPane.snapshot(parameters, null);
@@ -288,13 +303,12 @@ public class CaptureEditor extends BorderPane implements Initializable {
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
+		
+		right_img();
 	}
 	
-	private void btn_Load(MouseEvent event) {
-		
-		
-				
-	}
+	
+	
 	public void right_img(){
 		
 		//파일 객체를 폴더의 절대 경로를 매개변수 넣어서 생성
@@ -302,19 +316,23 @@ public class CaptureEditor extends BorderPane implements Initializable {
 		//파일 배열을 선언하고 위에 생성한 파일 객체의 listFiles 메서드 호출하여 초기화.
 		File[] listOfFiles=folder.listFiles();
 		//콘솔창에 파일 이름 출력.
-		//System.out.println(listOfFiles);
+		
+		for(int i=0; i<list.size(); ++i){
+			vbox.getChildren().remove(list.get(i));
+		}
+		list.removeAll(list);
 		
 		//이미지 객체를 생성하고 생성한 객체의 주소 값을 ArrayList에 add
 		for(int i=0; i<listOfFiles.length; i++){
-			Image image=new Image(img[i], 230.0, 450.0, true, true);
-			ImageView iv = new ImageView(image);
-			iv.setId(i+"");
+			String filename = listOfFiles[i].getName();
+			Image tempImg = new Image(rootPath+filename, 230.0, 450.0, true, true);
+			ImageView iv = new ImageView(tempImg);
+			iv.setId(rootPath+filename);
 			iv.setOnMouseClicked(event->ImageClickEvent(event));
 			list.add(iv);
 		}
 		
-		//이미지를 VBox
-		for(int i=0; i<list.size(); i++){
+		for(int i=list.size()-1; i>=0; --i){
 			vbox.getChildren().add(list.get(i));
 		}
 	}
@@ -322,12 +340,28 @@ public class CaptureEditor extends BorderPane implements Initializable {
 		double width = getWidth() - 250.0;
 		double height = getHeight() - 50.0;
 		ImageView obj = (ImageView)event.getSource();
-
-		Image canvasImg = new Image(img[Integer.parseInt(obj.getId())], width, height, true, true);
+		
+		Image canvasImg = new Image(obj.getId(), width, height, true, true);
 		canvas.setWidth(width);
 		canvas.setHeight(height);
-		
 		gc.drawImage(canvasImg, 0.0, 0.0);
-		
+	}
+	
+	private void exit(MouseEvent event) {
+		SaveandExit();
+	}
+	public void SaveandExit(){
+		Dialog<ButtonType> dialog = new Dialog<>();
+		dialog.initModality(Modality.APPLICATION_MODAL);
+		dialog.initStyle(StageStyle.UNDECORATED);
+		dialog.getDialogPane().setId("alert");
+		dialog.getDialogPane().getStylesheets().add(getClass().getResource("capture.css").toExternalForm());
+		dialog.getDialogPane().setContentText("저장 후 종료하시겠습니까?");
+		dialog.getDialogPane().getButtonTypes().add(ButtonType.NO);
+		dialog.getDialogPane().getButtonTypes().add(ButtonType.YES);
+		Optional<ButtonType> result = dialog.showAndWait();
+		if(result.get() ==ButtonType.YES)
+			saveFile();
+			AppMain.center.getChildren().remove(root);
 	}
 }

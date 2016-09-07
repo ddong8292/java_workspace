@@ -20,10 +20,9 @@
 				<Button fx:id="btn_Pen" id="btn_pen" prefHeight="25.0" prefWidth="25.0"/>
 				<Button fx:id="btn_Eraser" id="btn_eraser" prefHeight="25.0" prefWidth="25.0"/>				
 				<Button fx:id="btn_Text" id="btn_text" prefHeight="25.0" prefWidth="25.0"/>
-				<Button fx:id="btn_Load" id="btn_load" prefHeight="25.0" prefWidth="25.0"/>
 				<ColorPicker fx:id="colorPicker" prefHeight="25.0" prefWidth="44.0"/>	
 				<Pane HBox.hgrow="ALWAYS" />
-				<Button />
+				<Button fx:id="btn_Close" id="btn_close" prefHeight="25.0" prefWidth="25.0"/>
 			</items>
 		</ToolBar>
 	</top>
